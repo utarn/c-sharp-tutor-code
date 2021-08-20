@@ -165,7 +165,7 @@ namespace Mvcday1.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
+            
             migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new

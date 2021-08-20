@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mvcday1.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -21,7 +21,8 @@ namespace Mvcday1.Data
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
-            // builder.Entity<Book>().HasKey(b => b.Id);
+            // builder.Entity<Book>().HasKey(b => b.Id);            
+            
         }
     }
 }

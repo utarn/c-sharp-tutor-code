@@ -30,5 +30,4 @@ namespace Mvcday1.Applications.Book.Queries.GetBookQuery
         }
     }
 
-
 }

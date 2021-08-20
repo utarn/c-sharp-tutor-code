@@ -6,6 +6,8 @@ using Mvcday1.Data;
 
 namespace Mvcday1.Applications.Book.Commands.CreateBookCommand
 {
+
+
     public class CreateBookCommand : IRequest<bool>
     {
         [Display(Name = "ชื่อ")]
@@ -26,7 +28,8 @@ namespace Mvcday1.Applications.Book.Commands.CreateBookCommand
 
             public async Task<bool> Handle(CreateBookCommand request, CancellationToken cancellationToken)
             {
-                var newBook = new Data.Book() {
+                var newBook = new Data.Book()
+                {
                     Title = request.Title,
                     Price = request.Price,
                     CategoryId = request.CategoryId
