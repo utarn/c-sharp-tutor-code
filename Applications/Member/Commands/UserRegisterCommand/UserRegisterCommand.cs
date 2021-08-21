@@ -42,7 +42,7 @@ namespace Mvcday1.Applications.Member.Commands.UserRegisterCommand
                 if (result.Succeeded)
                 {                    
                     await _userManager.AddToRoleAsync(appUser, "User");
-                    await _emailService.SendRegisterEmail($"{appUser.FirstName} {appUser.LastName}", appUser.Email);                    
+                    await _emailService.SendRegisterEmail($"{appUser.FirstName} {appUser.LastName}", appUser.Email, appUser.PhoneNumber);                    
                     return true;
                 }
                 else
