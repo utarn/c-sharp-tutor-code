@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mvcday1.Applications.Book.Commands.CreateBookCommand;
 using Mvcday1.Applications.Book.Commands.EditBookCommand;
@@ -10,6 +11,7 @@ using Mvcday1.Applications.Book.Queries.GetCategoryQuery;
 
 namespace Mvcday1.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class BookController : Controller
     {
         private readonly IMediator _mediator;
@@ -17,7 +19,7 @@ namespace Mvcday1.Controllers
         {
             _mediator = mediator;
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> Index(GetBookQuery query)
         {
             var model = await _mediator.Send(query);
@@ -33,7 +35,6 @@ namespace Mvcday1.Controllers
             var model = await _mediator.Send(query);
             return View(model);
         }
-
         public async Task<IActionResult> Create()
         {
             ViewData["Categories"] = await _mediator.Send(new GetCategoryQuery());

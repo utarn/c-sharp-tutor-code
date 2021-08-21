@@ -23,5 +23,11 @@ else
     <li class="nav-item">
         <a class="nav-link text-dark" asp-controller="Member" asp-action="Login">Login</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Member" asp-action="SocialLogin">Google Login</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Member" asp-action="SocialLogin" asp-route-Provider="pwa">PWA LDAP</a>
+    </li>
 }
 </ul>

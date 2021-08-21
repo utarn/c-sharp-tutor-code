@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Mvcday1.Data;
 
 namespace Mvcday1.Applications.Member.Commands.UserRegisterCommand
@@ -20,10 +21,11 @@ namespace Mvcday1.Applications.Member.Commands.UserRegisterCommand
         public class UserRegisterCommandHandler : IRequestHandler<UserRegisterCommand, bool>
         {
             private readonly UserManager<ApplicationUser> _userManager;
-
-            public UserRegisterCommandHandler(UserManager<ApplicationUser> userManager)
+            private readonly IEmailService _emailService;
+            public UserRegisterCommandHandler(UserManager<ApplicationUser> userManager, IEmailService emailService)
             {
                 _userManager = userManager;
+                _emailService = emailService;
             }
 
             public async Task<bool> Handle(UserRegisterCommand request, CancellationToken cancellationToken)
@@ -38,8 +40,9 @@ namespace Mvcday1.Applications.Member.Commands.UserRegisterCommand
                 };
                 var result = await _userManager.CreateAsync(appUser, request.Password);
                 if (result.Succeeded)
-                {
+                {                    
                     await _userManager.AddToRoleAsync(appUser, "User");
+                    await _emailService.SendRegisterEmail($"{appUser.FirstName} {appUser.LastName}", appUser.Email);                    
                     return true;
                 }
                 else

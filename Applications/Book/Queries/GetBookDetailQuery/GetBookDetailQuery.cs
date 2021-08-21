@@ -37,3 +37,11 @@ namespace Mvcday1.Applications.Book.Queries.GetBookDetailQuery
         }
     }
 }
+
+// var command ="SELECT COUNT(*) FROM account WHERE user = '%USER%' AND pass = '%PASS%'"
+// command = command.replace("%USER%",userInput.Text);
+// command = command.replace("%PASS%",passInput.Text);
+// user = utarn , pass = 1234
+// SELECT COUNT(*) FROM account WHERE user = 'utarn' AND pass = '1234'
+// user = admin , pass = "1234' OR 1 OR pass = '"
+// SELECT COUNT(*) FROM account WHERE user = 'admin' AND pass = '1234\' OR 1 OR pass = \''

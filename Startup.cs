@@ -42,24 +42,24 @@ namespace Mvcday1
 
             services.Configure<IdentityOptions>(options =>
 {
-                // Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 1;
+    // Password settings.
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
 
-                // Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.AllowedForNewUsers = true;
+    // Lockout settings.
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
 
-                // User settings.
-                options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-            options.User.RequireUniqueEmail = false;
-            });
+    // User settings.
+    options.User.AllowedUserNameCharacters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = false;
+});
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -72,6 +72,17 @@ namespace Mvcday1
                 options.SlidingExpiration = true;
             });
 
+            var googleAuthenSection = Configuration.GetSection("Authentication:Google");
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = googleAuthenSection["ClientId"];
+                    options.ClientSecret = googleAuthenSection["ClientSecret"];
+                });
+
+
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.AddFluentValidation(fv =>
             {
